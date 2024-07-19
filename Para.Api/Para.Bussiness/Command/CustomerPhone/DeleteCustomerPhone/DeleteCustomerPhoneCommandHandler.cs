@@ -28,6 +28,14 @@ namespace Para.Bussiness.Command.CustomerPhone.DeleteCustomerPhone
             {
                 return new ApiResponse("Invalid CustomerPhone Id");
             }
+
+            var customerPhone = await unitOfWork.Repository.GetById(request.CustomerPhoneId);
+
+            if (customerPhone == null)
+            {
+                return new ApiResponse("CustomerPhone not found");
+            }
+
             await unitOfWork.Repository.Delete(request.CustomerPhoneId);
             await unitOfWork.Complete();
             return new ApiResponse();

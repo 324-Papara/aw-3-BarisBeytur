@@ -28,6 +28,14 @@ namespace Para.Bussiness.Command.CustomerAddress.DeleteCustomerAddress
             {
                 return new ApiResponse("Invalid CustomerAddress Id");
             }
+
+            var customerAddress = await unitOfWork.Repository.GetById(request.CustomerAddressId);
+
+            if (customerAddress == null)
+            {
+                return new ApiResponse("CustomerAddress not found");
+            }
+
             await unitOfWork.Repository.Delete(request.CustomerAddressId);
             await unitOfWork.Complete();
             return new ApiResponse();

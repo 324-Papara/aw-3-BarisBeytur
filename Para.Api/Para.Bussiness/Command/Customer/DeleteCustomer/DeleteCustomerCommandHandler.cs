@@ -22,7 +22,17 @@ namespace Para.Bussiness.Command.Customer.DeleteCustomer
             {
                 return new ApiResponse("Invalid Customer Id");
             }
-            await unitOfWork.Repository.Delete(request.CustomerId);
+
+            var repo = unitOfWork.Repository;
+
+            var customer = await repo.GetById(request.CustomerId);
+
+            if (customer == null)
+            {
+                return new ApiResponse("Customer not found");
+            }
+
+            await repo.Delete(request.CustomerId);
             await unitOfWork.Complete();
             return new ApiResponse();
         }

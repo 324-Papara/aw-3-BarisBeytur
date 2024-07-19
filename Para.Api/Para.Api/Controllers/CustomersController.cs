@@ -7,9 +7,7 @@ using Para.Bussiness.Command.Customer.UpdateCustomer;
 using Para.Bussiness.Query.Customer.GetAll;
 using Para.Bussiness.Query.Customer.GetById;
 using Para.Bussiness.Query.Customer.GetByParameter;
-using Para.Data.Domain;
 using Para.Schema;
-using System.Formats.Asn1;
 
 namespace Para.Api.Controllers
 {

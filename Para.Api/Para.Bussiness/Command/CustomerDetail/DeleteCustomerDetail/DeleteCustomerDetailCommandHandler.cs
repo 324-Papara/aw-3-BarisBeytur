@@ -22,6 +22,15 @@ namespace Para.Bussiness.Command.CustomerDetail.DeleteCustomerDetail
             {
                 return new ApiResponse("Invalid CustomerDetail Id");
             }
+
+            var customerDetail = await unitOfWork.Repository.GetById(request.CustomerDetailId);
+
+            if (customerDetail == null)
+            {
+                return new ApiResponse("CustomerDetail not found");
+            }
+
+
             await unitOfWork.Repository.Delete(request.CustomerDetailId);
             await unitOfWork.Complete();
             return new ApiResponse();

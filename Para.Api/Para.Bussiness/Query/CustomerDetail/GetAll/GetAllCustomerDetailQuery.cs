@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Query.CustomerDetail.GetAll
 {
-    public class GetAllCustomerDetailQuery : IRequest<ApiResponse<List<CustomerResponse>>>
+    public class GetAllCustomerDetailQuery : IRequest<ApiResponse<List<CustomerDetailResponse>>>
     {
         public GetAllCustomerDetailQuery() { }
     }
