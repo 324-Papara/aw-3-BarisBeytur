@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Command.CustomerAddress.CreateCustomerAddress
 {
-    internal class CreateCustomerDetailCommand
+    public class CreateCustomerDetailCommand
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Query.CustomerDetail.GetByIdWithDetails
 {
-    internal class GetByIdWithDetailsCustomerDetailQueryHandler
+    public class GetByIdWithDetailsCustomerDetailQueryHandler
     {
     }
 }

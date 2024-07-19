@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Command.CustomerAddress.UpdateCustomerAddress
 {
-    internal class UpdateCustomerPhoneCommandHandler
+    public class UpdateCustomerPhoneCommandHandler
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Command.CustomerDetail.DeleteCustomerDetail
 {
-    internal class DeleteCustomerDetailCommandHandler
+    public class DeleteCustomerDetailCommandHandler
     {
     }
 }

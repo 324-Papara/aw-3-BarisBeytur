@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Para.Bussiness.Command.CustomerDetail.UpdateCustomerDetail
 {
-    internal class UpdateCustomerDetailCommand
+    public class UpdateCustomerDetailCommand
     {
     }
 }
