@@ -14,10 +14,10 @@ namespace Para.Bussiness.Query.Customer.GetById
     public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, ApiResponse<CustomerResponse>>
     {
 
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public GetCustomerByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetCustomerByIdQueryHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -33,7 +33,7 @@ namespace Para.Bussiness.Query.Customer.GetById
                     Message = "Invalid Customer Id"
                 };
             }
-            var entity = await unitOfWork.CustomerRepository.GetById(request.CustomerId);
+            var entity = await unitOfWork.Repository.GetById(request.CustomerId);
             if (entity == null)
             {
                 return new ApiResponse<CustomerResponse>()

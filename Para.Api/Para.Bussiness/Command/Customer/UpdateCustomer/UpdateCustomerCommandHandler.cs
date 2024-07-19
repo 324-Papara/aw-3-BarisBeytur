@@ -16,10 +16,10 @@ namespace Para.Bussiness.Command.Customer.UpdateCustomer
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, ApiResponse>
     {
 
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public UpdateCustomerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateCustomerCommandHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -34,7 +34,7 @@ namespace Para.Bussiness.Command.Customer.UpdateCustomer
             mapped.Id = request.CustomerId;
             mapped.InsertUser = "system";
             mapped.InsertDate = DateTime.Now;
-            unitOfWork.CustomerRepository.Update(mapped);
+            unitOfWork.Repository.Update(mapped);
             await unitOfWork.Complete();
             return new ApiResponse();
         }

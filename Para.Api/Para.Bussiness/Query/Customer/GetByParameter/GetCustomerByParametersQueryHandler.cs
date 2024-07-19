@@ -13,10 +13,10 @@ namespace Para.Bussiness.Query.Customer.GetByParameter
 {
     public class GetCustomerByParametersQueryHandler : IRequestHandler<GetCustomerByParametersQuery, ApiResponse<List<CustomerResponse>>>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public GetCustomerByParametersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetCustomerByParametersQueryHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -24,13 +24,13 @@ namespace Para.Bussiness.Query.Customer.GetByParameter
 
         public async Task<ApiResponse<List<CustomerResponse>>> Handle(GetCustomerByParametersQuery request, CancellationToken cancellationToken)
         {
-            var customersWithNameReqParameter = await unitOfWork.CustomerRepository
+            var customersWithNameReqParameter = await unitOfWork.Repository
                 .Where(c => c.FirstName == request.Name);
 
-            var customersWithIdentityNumberReqParameter = await unitOfWork.CustomerRepository
+            var customersWithIdentityNumberReqParameter = await unitOfWork.Repository
                 .Where(c => c.IdentityNumber == request.IdentityNumber);
 
-            var customersWithCustomerIdReqParameter = await unitOfWork.CustomerRepository
+            var customersWithCustomerIdReqParameter = await unitOfWork.Repository
                 .Where(c => c.Id == request.CustomerId);
 
             var customers = customersWithNameReqParameter

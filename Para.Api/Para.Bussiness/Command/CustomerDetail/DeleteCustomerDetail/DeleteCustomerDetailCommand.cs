@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Para.Base.Response;
 
 namespace Para.Bussiness.Command.CustomerDetail.DeleteCustomerDetail
 {
-    public class DeleteCustomerDetailCommand
+    public class DeleteCustomerDetailCommand : IRequest<ApiResponse>
     {
+        public long CustomerDetailId { get; private set; }
+
+        public DeleteCustomerDetailCommand(long customerId)
+        {
+            CustomerDetailId = customerId;
+        }
     }
 }

@@ -16,10 +16,10 @@ namespace Para.Bussiness.Query.Customer.GetById
     public class GetCustomerByIdWithDetailsQueryHandler : IRequestHandler<GetCustomerByIdWithDetailsQuery, ApiResponse<Para.Data.Domain.Customer>>
     {
 
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public GetCustomerByIdWithDetailsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetCustomerByIdWithDetailsQueryHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -36,7 +36,7 @@ namespace Para.Bussiness.Query.Customer.GetById
                 };
             }
 
-            var customersWithDetails = await unitOfWork.CustomerRepository
+            var customersWithDetails = await unitOfWork.Repository
                 .Include(c => c.CustomerAddresses, c => c.CustomerPhones)
                 .FirstOrDefaultAsync(c => c.Id == request.CustomerId);
 

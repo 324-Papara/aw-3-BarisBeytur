@@ -10,10 +10,10 @@ namespace Para.Bussiness.Command.Customer.CreateCustomer
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, ApiResponse<CustomerResponse>>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public CreateCustomerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateCustomerCommandHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -26,7 +26,7 @@ namespace Para.Bussiness.Command.Customer.CreateCustomer
 
             var mapped = mapper.Map<CustomerRequest, Data.Domain.Customer>(request.Request);
             mapped.CustomerNumber = new Random().Next(1000000, 9999999);
-            await unitOfWork.CustomerRepository.Insert(mapped);
+            await unitOfWork.Repository.Insert(mapped);
             await unitOfWork.Complete();
 
             var response = mapper.Map<CustomerResponse>(mapped);

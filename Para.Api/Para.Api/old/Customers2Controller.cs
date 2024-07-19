@@ -9,9 +9,9 @@ namespace Para.Api.Controllers
     [NonController]
     public class Customers2Controller : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
 
-        public Customers2Controller(IUnitOfWork unitOfWork)
+        public Customers2Controller(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -20,37 +20,37 @@ namespace Para.Api.Controllers
         [HttpGet]
         public async Task<List<Customer>> Get()
         {
-            var entityList = await unitOfWork.CustomerRepository.GetAll();
+            var entityList = await unitOfWork.Repository.GetAll();
             return entityList;
         }
 
         [HttpGet("{customerId}")]
         public async Task<Customer?> Get(long customerId)
         {
-            var entity = await unitOfWork.CustomerRepository.GetById(customerId);
+            var entity = await unitOfWork.Repository.GetById(customerId);
             return entity;
         }
 
         [HttpPost]
         public async Task Post([FromBody] Customer value)
         {
-            await unitOfWork.CustomerRepository.Insert(value);
-            await unitOfWork.CustomerRepository.Insert(value);
-            await unitOfWork.CustomerRepository.Insert(value);
+            await unitOfWork.Repository.Insert(value);
+            await unitOfWork.Repository.Insert(value);
+            await unitOfWork.Repository.Insert(value);
             await unitOfWork.CompleteWithTransaction();
         }
 
         [HttpPut("{customerId}")]
         public async Task Put(long customerId, [FromBody] Customer value)
         {
-            unitOfWork.CustomerRepository.Update(value);
+            unitOfWork.Repository.Update(value);
             await unitOfWork.Complete();
         }
 
         [HttpDelete("{customerId}")]
         public async Task Delete(long customerId)
         {
-            await unitOfWork.CustomerRepository.Delete(customerId);
+            await unitOfWork.Repository.Delete(customerId);
             await unitOfWork.Complete();
         }
     }
