@@ -9,6 +9,7 @@ using Para.Bussiness;
 using Para.Bussiness.Command.Customer.CreateCustomer;
 using Para.Bussiness.Validation.Customer;
 using Para.Data.Context;
+using Para.Data.Domain;
 using Para.Data.UnitOfWork;
 using System.Text.Json.Serialization;
 
@@ -46,7 +47,10 @@ public class Startup
         //services.AddDbContext<ParaDbContext>(options => options.UseNpgsql(connectionStringPostgre));
   
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork<Customer>, UnitOfWork<Customer>>();
+        services.AddScoped<IUnitOfWork<CustomerDetail>, UnitOfWork<CustomerDetail>>();
+        services.AddScoped<IUnitOfWork<CustomerPhone>, UnitOfWork<CustomerPhone>>();
+        services.AddScoped<IUnitOfWork<CustomerAddress>, UnitOfWork<CustomerAddress>>();
 
         var config = new MapperConfiguration(cfg =>
         {

@@ -9,10 +9,10 @@ namespace Para.Bussiness.Query.Customer.GetAll
 {
     public class GetAllCustomerQueryHandler : IRequestHandler<GetAllCustomerQuery, ApiResponse<List<CustomerResponse>>>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork<Para.Data.Domain.Customer> unitOfWork;
         private readonly IMapper mapper;
 
-        public GetAllCustomerQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetAllCustomerQueryHandler(IUnitOfWork<Para.Data.Domain.Customer> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -20,7 +20,7 @@ namespace Para.Bussiness.Query.Customer.GetAll
 
         public async Task<ApiResponse<List<CustomerResponse>>> Handle(GetAllCustomerQuery request, CancellationToken cancellationToken)
         {
-            List<Para.Data.Domain.Customer> entityList = await unitOfWork.CustomerRepository.GetAll();
+            List<Para.Data.Domain.Customer> entityList = await unitOfWork.Repository.GetAll();
             var mappedList = mapper.Map<List<CustomerResponse>>(entityList);
             return new ApiResponse<List<CustomerResponse>>(mappedList);
         }
