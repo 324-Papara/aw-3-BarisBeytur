@@ -47,25 +47,19 @@ public class Startup
         //services.AddDbContext<ParaDbContext>(options => options.UseNpgsql(connectionStringPostgre));
   
 
-        services.AddScoped<IUnitOfWork<Customer>, UnitOfWork<Customer>>();
-        services.AddScoped<IUnitOfWork<CustomerDetail>, UnitOfWork<CustomerDetail>>();
-        services.AddScoped<IUnitOfWork<CustomerPhone>, UnitOfWork<CustomerPhone>>();
-        services.AddScoped<IUnitOfWork<CustomerAddress>, UnitOfWork<CustomerAddress>>();
-
         var config = new MapperConfiguration(cfg =>
         {
             cfg.AddProfile(new MapperConfig());
         });
+
         services.AddSingleton(config.CreateMapper());
-
-        services.AddTransient<CustomService1>();
-        services.AddScoped<CustomService2>();
-        services.AddSingleton<CustomService3>();
-
-
         services.AddMediatR(typeof(CreateCustomerCommandHandler).Assembly);
         services.AddValidatorsFromAssemblyContaining<CustomerRequestValidator>();
 
+
+        //services.AddTransient<CustomService1>();
+        //services.AddScoped<CustomService2>();
+        //services.AddSingleton<CustomService3>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -89,40 +83,40 @@ public class Startup
             endpoints.MapControllers();
         });
         
-        app.Use((context,next) =>
-        {
-            if (!string.IsNullOrEmpty(context.Request.Path) && context.Request.Path.Value.Contains("favicon"))
-            {
-                return next();
-            }
+        //app.Use((context,next) =>
+        //{
+        //    if (!string.IsNullOrEmpty(context.Request.Path) && context.Request.Path.Value.Contains("favicon"))
+        //    {
+        //        return next();
+        //    }
             
-            var service1 = context.RequestServices.GetRequiredService<CustomService1>();
-            var service2 = context.RequestServices.GetRequiredService<CustomService2>();
-            var service3 = context.RequestServices.GetRequiredService<CustomService3>();
+        //    var service1 = context.RequestServices.GetRequiredService<CustomService1>();
+        //    var service2 = context.RequestServices.GetRequiredService<CustomService2>();
+        //    var service3 = context.RequestServices.GetRequiredService<CustomService3>();
 
-            service1.Counter++;
-            service2.Counter++;
-            service3.Counter++;
+        //    service1.Counter++;
+        //    service2.Counter++;
+        //    service3.Counter++;
 
-            return next();
-        });
+        //    return next();
+        //});
         
-        app.Run(async context =>
-        {
-            var service1 = context.RequestServices.GetRequiredService<CustomService1>();
-            var service2 = context.RequestServices.GetRequiredService<CustomService2>();
-            var service3 = context.RequestServices.GetRequiredService<CustomService3>();
+        //app.Run(async context =>
+        //{
+        //    var service1 = context.RequestServices.GetRequiredService<CustomService1>();
+        //    var service2 = context.RequestServices.GetRequiredService<CustomService2>();
+        //    var service3 = context.RequestServices.GetRequiredService<CustomService3>();
 
-            if (!string.IsNullOrEmpty(context.Request.Path) && !context.Request.Path.Value.Contains("favicon"))
-            {
-                service1.Counter++;
-                service2.Counter++;
-                service3.Counter++;
-            }
+        //    if (!string.IsNullOrEmpty(context.Request.Path) && !context.Request.Path.Value.Contains("favicon"))
+        //    {
+        //        service1.Counter++;
+        //        service2.Counter++;
+        //        service3.Counter++;
+        //    }
 
-            await context.Response.WriteAsync($"Service1 : {service1.Counter}\n");
-            await context.Response.WriteAsync($"Service2 : {service2.Counter}\n");
-            await context.Response.WriteAsync($"Service3 : {service3.Counter}\n");
-        });
+        //    await context.Response.WriteAsync($"Service1 : {service1.Counter}\n");
+        //    await context.Response.WriteAsync($"Service2 : {service2.Counter}\n");
+        //    await context.Response.WriteAsync($"Service3 : {service3.Counter}\n");
+        //});
     }
 }
