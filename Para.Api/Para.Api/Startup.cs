@@ -72,8 +72,9 @@ public class Startup
         }
 
 
+        app.UseMiddleware<LoggerMiddleware>();
         app.UseMiddleware<HeartbeatMiddleware>();
-        
+
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseMiddleware<ErrorHandlerMiddleware>();
