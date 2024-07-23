@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Para.Base.Response;
-using Para.Bussiness.Command.CustomerDetail.UpdateCustomerDetail;
+using Para.Bussiness.Validation.Customer;
 using Para.Data.UnitOfWork;
 using Para.Schema;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Para.Bussiness.Command.CustomerDetail.UpdateCustomerDetail
 {
@@ -26,8 +22,8 @@ namespace Para.Bussiness.Command.CustomerDetail.UpdateCustomerDetail
 
         public async Task<ApiResponse> Handle(UpdateCustomerDetailCommand request, CancellationToken cancellationToken)
         {
-            //CustomerDetailRequestValidator validator = new CustomerDetailRequestValidator();
-            //await validator.ValidateAndThrowAsync(request.Request);
+            CustomerDetailRequestValidator validator = new CustomerDetailRequestValidator();
+            await validator.ValidateAndThrowAsync(request.Request);
 
             var mapped = mapper.Map<CustomerDetailRequest, Data.Domain.CustomerDetail>(request.Request);
             mapped.Id = request.CustomerDetailId;

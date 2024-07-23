@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Para.Base.Response;
+using Para.Bussiness.Validation.Customer;
 using Para.Data.UnitOfWork;
 using Para.Schema;
 using System;
@@ -24,8 +26,8 @@ namespace Para.Bussiness.Command.CustomerPhone.CreateCustomerPhone
 
         public async Task<ApiResponse<CustomerPhoneResponse>> Handle(CreateCustomerPhoneCommand request, CancellationToken cancellationToken)
         {
-            //CustomerPhoneRequestValidator validator = new CustomerPhoneRequestValidator();
-            //await validator.ValidateAndThrowAsync(request.Request);
+            CustomerPhoneRequestValidator validator = new CustomerPhoneRequestValidator();
+            await validator.ValidateAndThrowAsync(request.Request);
 
             var mapped = mapper.Map<Data.Domain.CustomerPhone>(request.Request);
             await unitOfWork.Repository.Insert(mapped);

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Para.Base.Response;
+using Para.Bussiness.Validation.Customer;
 using Para.Data.UnitOfWork;
 using Para.Schema;
 
@@ -19,8 +21,8 @@ namespace Para.Bussiness.Command.CustomerDetail.CreateCustomerDetail
 
         public async Task<ApiResponse<CustomerDetailResponse>> Handle(CreateCustomerDetailCommand request, CancellationToken cancellationToken)
         {
-            //CustomerDetailRequestValidator validator = new CustomerDetailRequestValidator();
-            //await validator.ValidateAndThrowAsync(request.Request);
+            CustomerDetailRequestValidator validator = new CustomerDetailRequestValidator();
+            await validator.ValidateAndThrowAsync(request.Request);
 
             var mapped = mapper.Map<Data.Domain.CustomerDetail>(request.Request);
             await unitOfWork.Repository.Insert(mapped);
