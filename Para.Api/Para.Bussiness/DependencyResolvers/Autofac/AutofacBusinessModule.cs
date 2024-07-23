@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
+using Para.Data.DapperRepository;
 using Para.Data.Domain;
 using Para.Data.UnitOfWork;
 using System;
@@ -23,6 +24,9 @@ namespace Para.Bussiness.DependencyResolvers.Autofac
             builder.RegisterType<UnitOfWork<CustomerDetail>>().As<IUnitOfWork<CustomerDetail>>().SingleInstance();
             builder.RegisterType<UnitOfWork<CustomerPhone>>().As<IUnitOfWork<CustomerPhone>>().SingleInstance();
             builder.RegisterType<UnitOfWork<CustomerAddress>>().As<IUnitOfWork<CustomerAddress>>().SingleInstance();
+
+
+            builder.RegisterType<CustomerReadOnlyRepository>().As<ICustomerReadOnlyRepository>().SingleInstance();
 
         }
     }

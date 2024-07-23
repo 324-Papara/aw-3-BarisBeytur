@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Para.Api.Middleware;
@@ -11,6 +12,7 @@ using Para.Bussiness.Validation.Customer;
 using Para.Data.Context;
 using Para.Data.Domain;
 using Para.Data.UnitOfWork;
+using System.Data;
 using System.Text.Json.Serialization;
 
 namespace Para.Api;
@@ -44,8 +46,10 @@ public class Startup
 
         var connectionStringSql = Configuration.GetConnectionString("MsSqlConnection");
         services.AddDbContext<ParaDbContext>(options => options.UseSqlServer(connectionStringSql));
+        services.AddScoped<IDbConnection>(sp => new SqlConnection(Configuration.GetConnectionString("MsSqlConnection")));
+
         //services.AddDbContext<ParaDbContext>(options => options.UseNpgsql(connectionStringPostgre));
-  
+
 
         var config = new MapperConfiguration(cfg =>
         {
